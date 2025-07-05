@@ -1,10 +1,10 @@
-kind: Namespace
 apiVersion: v1
+kind: Namespace
 metadata:
   name: frontend-namespace
 ---
-kind: Deployment
 apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: frontend-deployment
   namespcae: frontend-namespace
@@ -27,8 +27,8 @@ spec:
           - name: BACKEND_URL
             value: "http://backend-service.backend-namespace.svc.cluster.local:5002"
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: frontend-service
 spec:

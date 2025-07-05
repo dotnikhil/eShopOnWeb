@@ -24,10 +24,10 @@ spec:
           ports:
             - containerPort: 5000
           env:
-          - name: ACCEPT_EULA
-            value: "Y"
-          - name: SA_PASSWORD
-            value: "password"
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: SA_PASSWORD
+              value: "secure-Random-P@ss-11234"
 ---
 apiVersion: v1
 kind: Service

@@ -24,8 +24,16 @@ spec:
           ports:
             - containerPort: 5000
           env:
-          - name: DATABASE_CONNECTION_STRING
-            value: "Server=db-service.backend-namespace.svc.cluster.local;Database=CatalogDb;User Id=sa;Password=your_password;"
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"
+            - name: AZURE_SQL_CATALOG_CONNECTION_STRING_KEY
+              value: "CatalogConnection"
+            - name: AZURE_SQL_IDENTITY_CONNECTION_STRING_KEY
+              value: "IdentityConnection"
+            - name: CatalogConnection
+              value: "Server=db-service.backend-namespace.svc.cluster.local,1433;Database=Microsoft.eShopOnWeb.CatalogDb;User Id=sa;Password=secure-Random-P@ss-11234;TrustServerCertificate=true;"
+            - name: IdentityConnection
+              value: "Server=db-service.backend-namespace.svc.cluster.local,1433;Database=Microsoft.eShopOnWeb.Identity;User Id=sa;Password=secure-Random-P@ss-11234;TrustServerCertificate=true;"
 ---
 apiVersion: v1
 kind: Service

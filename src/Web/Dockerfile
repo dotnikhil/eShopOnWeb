@@ -4,10 +4,9 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /fsrc
 
-COPY src/Web/Web.csproj .
-RUN dotnet restore Web.csproj
-
 COPY . .
+RUN dotnet restore ./src/Web/Web.csproj
+
 RUN dotnet build ./src/Web/Web.csproj -c Release -o ./build
 
 FROM build AS publish

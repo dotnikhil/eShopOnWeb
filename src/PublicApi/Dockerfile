@@ -4,10 +4,9 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /bsrc
 
-COPY src/PublicApi/PublicApi.csproj .
-RUN dotnet restore PublicApi.csproj
-
 COPY . .
+RUN dotnet restore ./src/PublicApi/PublicApi.csproj
+
 RUN dotnet build ./src/PublicApi/PublicApi.csproj -c Release -o ./build
 
 FROM build AS publish

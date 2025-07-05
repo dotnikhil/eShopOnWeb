@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: backend-container
-          image: nikhildocker/eshop-backend:1
+          image: nikhildocker4424/eshop-backend:1
           ports:
             - containerPort: 5000
 ---

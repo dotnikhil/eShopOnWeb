@@ -24,8 +24,10 @@ spec:
           ports:
             - containerPort: 80
           env: 
-          - name: baseUrls__apiBase
-            value: "http://backend-service.backend-namespace.svc.cluster.local:5002"
+            - name: baseUrls__apiBase
+              value: "http://backend-service.backend-namespace.svc.cluster.local:5002/api/"
+            - name: baseUrls__webBase
+              value: "http://frontend-service.frontend-namespace.svc.cluster.local:81/"
 ---
 apiVersion: v1
 kind: Service

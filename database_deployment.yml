@@ -6,37 +6,39 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-deployment
+  name: db-deployment
   namespace: backend-namespace
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backend
+      app: db
   template:
     metadata:
       labels:
-        app: backend
+        app: db
     spec:
       containers:
-        - name: backend-container
-          image: nikhildocker4424/eshop-backend:1
+        - name: db-container
+          image: mcr.microsoft.com/mssql/server:2019-latest
           ports:
             - containerPort: 5000
           env:
-          - name: DATABASE_CONNECTION_STRING
-            value: "Server=db-service.backend-namespace.svc.cluster.local;Database=CatalogDb;User Id=sa;Password=your_password;"
+          - name: ACCEPT_EULA
+            value: "Y"
+          - name: SA_PASSWORD
+            value: "password"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-service
+  name: db-service
   namespace: backend-namespace
 spec:
   selector:
-    app: backend
+    app: db
   ports:
-    - port: 5002
+    - port: 1433
       protocol: TCP
-      targetPort: 5000
+      targetPort: 1433
   type: ClusterIP

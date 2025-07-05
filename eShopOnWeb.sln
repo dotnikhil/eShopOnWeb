@@ -46,6 +46,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s manifests", "k8s manife
 		backend_deployment.yml = backend_deployment.yml
 		database_deployment.yml = database_deployment.yml
 		frontend_deployment.yml = frontend_deployment.yml
+		Jenkinsfile = Jenkinsfile
 	EndProjectSection
 EndProject
 Global

@@ -24,7 +24,7 @@ spec:
           ports:
             - containerPort: 80
           env: 
-          - name: BACKEND_URL
+          - name: baseUrls__apiBase
             value: "http://backend-service.backend-namespace.svc.cluster.local:5002"
 ---
 apiVersion: v1

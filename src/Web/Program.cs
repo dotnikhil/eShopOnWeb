@@ -100,9 +100,6 @@ var configSection = builder.Configuration.GetRequiredSection(BaseUrlConfiguratio
 builder.Services.Configure<BaseUrlConfiguration>(configSection);
 var baseUrlConfig = configSection.Get<BaseUrlConfiguration>();
 
-Console.WriteLine($"ApiBase config value: '{baseUrlConfig.ApiBase}'");
-Console.WriteLine($"WebBase config value: '{baseUrlConfig.WebBase}'");
-
 // Blazor Admin Required Services for Prerendering
 builder.Services.AddScoped<HttpClient>(s => new HttpClient
 {

@@ -1,7 +1,13 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: backend-namespace
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: backend-deployment
+  namespace: backend-namespace
 spec:
   replicas: 2
   selector:
@@ -26,6 +32,7 @@ spec:
   selector:
     app: backend
   ports:
-    - port: 5000
-      targetPort: 5002
+    - protocol: TCP
+    - port: 5002
+      targetPort: 5000
   type: ClusterIP

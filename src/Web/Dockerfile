@@ -18,6 +18,7 @@ RUN dotnet restore
 RUN dotnet publish -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+ENV ASPNETCORE_URLS=http://*:80 
 WORKDIR /app
 COPY --from=build /app/src/Web/out ./
 

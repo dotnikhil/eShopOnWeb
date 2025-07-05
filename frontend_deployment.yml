@@ -9,7 +9,7 @@ metadata:
   name: frontend-deployment
   namespcae: frontend-namespace
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: frontend-container
-          image: nikhildocker/frontend:1
+          image: nikhildocker/eshop-frontend:1
           ports:
             - containerPort: 80
           env: 
@@ -35,7 +35,6 @@ spec:
   selector:
     app: frontend
   ports:
-    - protocol: TCP
     - port: 81
       targetPort: 80
-  type: LoadBalancer
+  type: NodePort

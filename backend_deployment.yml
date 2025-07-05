@@ -9,7 +9,7 @@ metadata:
   name: backend-deployment
   namespace: backend-namespace
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: backend-container
-          image: nikhildocker/backend:1
+          image: nikhildocker/eshop-backend:1
           ports:
             - containerPort: 5000
 ---

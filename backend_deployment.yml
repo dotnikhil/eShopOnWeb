@@ -24,8 +24,6 @@ spec:
           ports:
             - containerPort: 5000
           env:
-            - name: ASPNETCORE_ENVIRONMENT
-              value: "Development"
             - name: ConnectionStrings__CatalogConnection
               value: "Server=db-service.backend-namespace.svc.cluster.local,1433;Database=Microsoft.eShopOnWeb.CatalogDb;User Id=sa;Password=secure-Random-P@ss-11234;TrustServerCertificate=true;"
             - name: ConnectionStrings__IdentityConnection

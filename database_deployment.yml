@@ -22,7 +22,7 @@ spec:
         - name: db-container
           image: mcr.microsoft.com/mssql/server:2019-latest
           ports:
-            - containerPort: 5000
+            - containerPort: 1433
           env:
             - name: ACCEPT_EULA
               value: "Y"

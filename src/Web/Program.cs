@@ -25,7 +25,7 @@ builder.Logging.AddConsole();
 //if (builder.Environment.IsDevelopment() || builder.Environment.EnvironmentName == "Docker")
 //{
 //    Configure SQL Server(local)
-//Microsoft.eShopWeb.Infrastructure.Dependencies.ConfigureServices(builder.Configuration, builder.Services);
+Microsoft.eShopWeb.Infrastructure.Dependencies.ConfigureServices(builder.Configuration, builder.Services);
 //}
 //else
 //{
@@ -119,26 +119,26 @@ var app = builder.Build();
 
 app.Logger.LogInformation("App created...");
 
-//app.Logger.LogInformation("Seeding Database...");
+app.Logger.LogInformation("Seeding Database...");
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var scopedProvider = scope.ServiceProvider;
-//    try
-//    {
-//        var catalogContext = scopedProvider.GetRequiredService<CatalogContext>();
-//        await CatalogContextSeed.SeedAsync(catalogContext, app.Logger);
+using (var scope = app.Services.CreateScope())
+{
+    var scopedProvider = scope.ServiceProvider;
+    try
+    {
+        var catalogContext = scopedProvider.GetRequiredService<CatalogContext>();
+        await CatalogContextSeed.SeedAsync(catalogContext, app.Logger);
 
-//        var userManager = scopedProvider.GetRequiredService<UserManager<ApplicationUser>>();
-//        var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
-//        var identityContext = scopedProvider.GetRequiredService<AppIdentityDbContext>();
-//        await AppIdentityDbContextSeed.SeedAsync(identityContext, userManager, roleManager);
-//    }
-//    catch (Exception ex)
-//    {
-//        app.Logger.LogError(ex, "An error occurred seeding the DB.");
-//    }
-//}
+        var userManager = scopedProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        var identityContext = scopedProvider.GetRequiredService<AppIdentityDbContext>();
+        await AppIdentityDbContextSeed.SeedAsync(identityContext, userManager, roleManager);
+    }
+    catch (Exception ex)
+    {
+        app.Logger.LogError(ex, "An error occurred seeding the DB.");
+    }
+}
 
 var catalogBaseUrl = builder.Configuration.GetValue(typeof(string), "CatalogBaseUrl") as string;
 if (!string.IsNullOrEmpty(catalogBaseUrl))

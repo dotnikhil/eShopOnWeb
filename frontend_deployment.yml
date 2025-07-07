@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: frontend-container
-          image: nikhildocker4424/eshop-frontendnew:1
+          image: nikhildocker4424/eshop-frontendnew2:1
           ports:
             - containerPort: 80
           env: 

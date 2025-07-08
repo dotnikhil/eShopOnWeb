@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: db-namespace
+  name: nfs-namespace
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: db-pvc
-  namespace: db-namespace
+  name: nfs-pvc
+  namespace: nfs-namespace
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: db-pv-class
+  storageClassName: pv-class
   resources: 
     requests:
       storage: 5Gi  

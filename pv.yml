@@ -7,9 +7,9 @@ spec:
     storage: 5Gi
   accessModes:
     - ReadWriteMany
-  StorageClassName: db-pv-class
-  PersistantVolumeReclaimPolicy: Retain
-  VolumeMode: Filesystem
+  storageClassName: db-pv-class
+  persistantVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
   nfs:
     server: nfs-service.nfs-namespace.svc.cluster.local
     path: /mnt/nfs-share

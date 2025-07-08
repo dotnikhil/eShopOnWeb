@@ -41,5 +41,4 @@ spec:
     - port: 2049
       targetPort: 2049
   selector:
-    matchLabels:
       app: nfs

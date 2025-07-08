@@ -47,6 +47,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s manifests", "k8s manife
 		database_deployment.yml = database_deployment.yml
 		frontend_deployment.yml = frontend_deployment.yml
 		Jenkinsfile = Jenkinsfile
+		nfs-server.yml = nfs-server.yml
+		pv.yml = pv.yml
+		pvc.yml = pvc.yml
 	EndProjectSection
 EndProject
 Global

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: db-pv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  StorageClassName: db-pv-class
+  PersistantVolumeReclaimPolicy: Retain
+  VolumeMode: Filesystem
+  nfs:
+    server: nfs-service.nfs-namespace.svc.cluster.local
+    path: /mnt/nfs-share

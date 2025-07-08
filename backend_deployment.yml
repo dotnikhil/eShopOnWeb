@@ -25,9 +25,9 @@ spec:
             - containerPort: 5000
           env:
             - name: ConnectionStrings__CatalogConnection
-              value: "Server=db-service.backend-namespace.svc.cluster.local,1433;Database=Microsoft.eShopOnWeb.CatalogDb;User Id=sa;Password=secure-Random-P@ss-11234;TrustServerCertificate=true;"
+              value: "Server=db-service.db-namespace.svc.cluster.local,1433;Database=Microsoft.eShopOnWeb.CatalogDb;User Id=sa;Password=secure-Random-P@ss-11234;TrustServerCertificate=true;"
             - name: ConnectionStrings__IdentityConnection
-              value: "Server=db-service.backend-namespace.svc.cluster.local,1433;Database=Microsoft.eShopOnWeb.Identity;User Id=sa;Password=secure-Random-P@ss-11234;TrustServerCertificate=true;"
+              value: "Server=db-service.db-namespace.svc.cluster.local,1433;Database=Microsoft.eShopOnWeb.Identity;User Id=sa;Password=secure-Random-P@ss-11234;TrustServerCertificate=true;"
 ---
 apiVersion: v1
 kind: Service

@@ -8,7 +8,7 @@ spec:
   accessModes:
     - ReadWriteMany
   storageClassName: db-pv-class
-  persistantVolumeReclaimPolicy: Retain
+  persistentVolumeReclaimPolicy: Retain
   volumeMode: Filesystem
   nfs:
     server: nfs-service.nfs-namespace.svc.cluster.local

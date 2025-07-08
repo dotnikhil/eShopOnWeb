@@ -50,7 +50,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s manifests", "k8s manife
 		nfs-server.yml = nfs-server.yml
 		pv.yml = pv.yml
 		pvc-nfs.yml = pvc-nfs.yml
-		pvc-db.yml = pvc-db.yml
 	EndProjectSection
 EndProject
 Global

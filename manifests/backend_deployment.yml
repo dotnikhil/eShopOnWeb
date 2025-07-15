@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: backend-container
-          image: nikhildocker4424/eshop-backendnew2:1
+          image: 496218138693.dkr.ecr.us-east-1.amazonaws.com/e-shop-on-web/backend:1
           ports:
             - containerPort: 5000
           env:

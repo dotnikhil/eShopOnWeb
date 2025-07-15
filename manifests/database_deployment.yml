@@ -29,7 +29,7 @@ spec:
       volumes:
         - name: db-storage
           persistentVolumeClaim:
-            claimName: db-pvc
+            claimName: pvc-db
 ---
 apiVersion: v1
 kind: Service

@@ -10,7 +10,7 @@ metadata:
   namespace: db-namespace
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: ebs-aws
   resources: 
     requests:

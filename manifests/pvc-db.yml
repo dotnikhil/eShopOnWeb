@@ -6,12 +6,12 @@ metadata:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-pvc
+  name: db-pvc
   namespace: db-namespace
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: pv-class
+  storageClassName: ebs-aws
   resources: 
     requests:
       storage: 5Gi  

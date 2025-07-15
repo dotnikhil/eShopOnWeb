@@ -1,0 +1,88 @@
+pipeline {
+    agent any
+    environment {
+        AWS_ACCOUNT_ID = '496218138693'
+        AWS_REGION = 'us-east-1'
+        APP_PATH = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/e-shop-on-web"
+        EKS_CLUSTER_NAME = 'my-cluster'
+        REMOTE_SERVER = '3.231.105.163'
+        USERNAME = 'ubuntu'
+    }
+
+    stages {
+        stage('git checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/dotnikhil/eShopOnWeb.git'
+            }
+        }
+        stage('Build Docker Image for Deployemnt') {
+            steps {
+                script {
+                    sh "docker build -t ${APP_PATH}/frontend:1 -f ./src/Web/Dockerfile ."
+                    sh "docker build -t ${APP_PATH}/backend:1 -f ./src/PublicApi/Dockerfile ."
+                }
+            }
+        }
+        stage('Login to AWS ECR'){
+            steps{
+                withAWS(credentials: 'AWS-cred', region: "$AWS_REGION") {
+                    script{
+                        sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+                        echo "logged in to AWS ECR"
+                    }
+                }
+            }
+        }
+        stage('push docker images to ECR'){
+            steps{
+                script{
+                    sh "docker push ${APP_PATH}/frontend:1"
+                    sh "docker push ${APP_PATH}/backend:1"
+                }
+            }
+        }
+        stage('clean up local docker images'){
+            steps {
+                script {
+                    sh "docker rmi ${APP_PATH}"
+                }
+            }
+        }
+        stage('Deploy to EKS Cluster'){
+            steps{
+                sshagent(['ssh-cred']) {
+                    script{
+                        sh """ 
+                            ssh -o StrictHostKeyChecking=no ${USERNAME}@${REMOTE_SERVER} \
+                                'set -e && \
+                                cd /home/eShopOnWeb && \
+                                sudo git stash && \
+                                sudo git pull && \
+                                sudo bash -c "export PATH=\$PATH:/usr/local/bin:/home/eShopOnWeb/manifests && \
+                                sudo aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME} && \
+                                sudo kubectl apply -f storage-class.yml && \
+                                sudo kubectl apply -f pvc-db.yml && \
+                                sudo kubectl apply -f database_deployment.yml && \
+                                sudo kubectl apply -f backend_deployment.yml && \
+                                sudo kubectl apply -f frontend_deployment.yml"'
+                        """
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up the workspace..'
+            cleanWs()
+            sh "docker logout ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+        }
+        success {
+            echo 'Deployment completed Successfully!'
+        }
+        failure {
+            echo 'Deployment failed!'
+        }
+    }
+}

@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCOUNT_ID = '496218138693'
+        AWS_ACCOUNT_ID = ''
         AWS_REGION = 'us-east-1'
         APP_PATH = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/e-shop-on-web"
         EKS_CLUSTER_NAME = 'my-cluster'
@@ -18,8 +18,8 @@ pipeline {
         stage('Build Docker Image for Deployemnt') {
             steps {
                 script {
-                    sh "docker build -t ${APP_PATH}/frontend:1 -f ./src/Web/Dockerfile ."
-                    sh "docker build -t ${APP_PATH}/backend:1 -f ./src/PublicApi/Dockerfile ."
+                    sh "docker build -t ${APP_PATH}:frontend -f ./src/Web/Dockerfile ."
+                    sh "docker build -t ${APP_PATH}:backend -f ./src/PublicApi/Dockerfile ."
                 }
             }
         }
@@ -36,18 +36,19 @@ pipeline {
         stage('push docker images to ECR'){
             steps{
                 script{
-                    sh "docker push ${APP_PATH}/frontend:1"
-                    sh "docker push ${APP_PATH}/backend:1"
+                    sh "docker push ${APP_PATH}:frontend"
+                    sh "docker push ${APP_PATH}:backend"
                 }
             }
         }
-        stage('clean up local docker images'){
-            steps {
-                script {
-                    sh "docker rmi ${APP_PATH}"
-                }
-            }
-        }
+        // stage('clean up local docker images'){
+        //     steps {
+        //         script {
+        //             sh "docker rmi ${APP_PATH}:frontend"
+        //             sh "docker rmi ${APP_PATH}:backend"
+        //         }
+        //     }
+        // }
         stage('Deploy to EKS Cluster'){
             steps{
                 sshagent(['ssh-cred']) {
@@ -55,7 +56,7 @@ pipeline {
                         sh """ 
                             ssh -o StrictHostKeyChecking=no ${USERNAME}@${REMOTE_SERVER} \
                                 'set -e && \
-                                cd /home/eShopOnWeb && \
+                                cd /home/eShopOnWeb/manifests && \
                                 sudo git stash && \
                                 sudo git pull && \
                                 sudo bash -c "export PATH=\$PATH:/usr/local/bin:/home/eShopOnWeb/manifests && \
